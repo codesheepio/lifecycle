@@ -7,6 +7,12 @@ export default class Timer extends Component {
     this.count = this.count.bind(this)
     this.reset = this.reset.bind(this)
   }
+  timerStart() {
+    setInterval(() => this.setState({ counter: this.state.counter + 1 }), 1000)
+  }
+  timerStop() {
+    clearInterval()
+  }
   count() {
     this.setState({ counter: this.state.counter + 1 })
   }
