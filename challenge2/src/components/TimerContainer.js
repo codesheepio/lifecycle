@@ -13,7 +13,7 @@ export default class TimerContainer extends Component {
     this.setState({ timerCount: this.state.timerCount + 1 })
   }
   removeTimer() {
-    this.setState({ timerCount: max(0, this.state.timerCount - 1) })
+    this.setState({ timerCount: Math.max(0, this.state.timerCount - 1) })
   }
   renderTimers() {
     const timers = []
