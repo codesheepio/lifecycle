@@ -6,12 +6,20 @@ export default class Timer extends Component {
     this.state = { counter: 0, start: false }
     this.count = this.count.bind(this)
     this.reset = this.reset.bind(this)
+    this.toggleTimerState = this.toggleTimerState(this)
   }
-  timerStart() {
-    setInterval(() => this.setState({ counter: this.state.counter + 1 }), 1000)
+  startTimer() {
+    setInterval(() => {
+      if (this.state.start) {
+        this.setState({ counter: this.state.counter + 1 })
+      }
+    }, 1000)
   }
-  timerStop() {
+  resetTimer() {
     clearInterval()
+  }
+  toggleTimerState() {
+    this.setState({ start: !this.state.start })
   }
   count() {
     this.setState({ counter: this.state.counter + 1 })
