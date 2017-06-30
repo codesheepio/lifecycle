@@ -3,23 +3,33 @@ import React, { Component } from 'react'
 export default class Timer extends Component {
   constructor(props) {
     super(props)
-    this.state = { counter: 0, start: false }
+    this.state = { counter: 0, start: false, timerId: null }
     this.count = this.count.bind(this)
     this.reset = this.reset.bind(this)
     this.startTimer = this.startTimer.bind(this)
     this.toggleTimerState = this.toggleTimerState.bind(this)
     this.resetTimer = this.resetTimer.bind(this)
+    this.removeTimer = this.removeTimer.bind(this)
+  }
+  componentDidMount() {
+    this.startTimer()
+    this.setState({ start: true })
+  }
+  componentWillUnmount() {
+    this.removeTimer()
   }
   startTimer() {
-    setInterval(() => {
+    const timerId = setInterval(() => {
       if (this.state.start) {
-        this.setState({ counter: this.state.counter + 1 })
+        this.setState({ counter: this.state.counter + 1, timerId })
       }
     }, 1000)
   }
   resetTimer() {
     this.setState({ counter: 0 })
-    clearInterval()
+  }
+  removeTimer() {
+    clearInterval(this.state.timerId)
   }
   toggleTimerState() {
     this.setState({ start: !this.state.start })
@@ -47,8 +57,14 @@ export default class Timer extends Component {
           style={{ margin: '5px' }}
           type="button"
           value={this.state.start ? 'Stop' : 'Start'}
+          onClick={this.toggleTimerState}
         />
-        <input style={{ margin: '5px' }} type="button" value="Reset" />
+        <input
+          style={{ margin: '5px' }}
+          type="button"
+          value="Reset"
+          onClick={this.resetTimer}
+        />
       </div>
     )
   }
